@@ -6,7 +6,6 @@ class CurrentConditions {
   datetimeEpoch?: number;
   temp?: number;
   feelslike?: number;
-  humidity?: number;
   dew?: number;
   precip?: number;
   precipprob?: any;
