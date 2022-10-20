@@ -1,6 +1,11 @@
 <script lang="ts">
 import axios from "axios";
 
+interface TestInter {
+  temp: number;
+  windspeed: number;
+}
+
 class CurrentConditions {
   datetime?: string;
   datetimeEpoch?: number;
@@ -34,11 +39,14 @@ class CurrentConditions {
 
 export default {
   data() {
+    var current: TestInter = {
+      temp: 0,
+      windspeed: 0,
+    };
     return {
-      //uri: "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/leszno/2022-10-18/2022-10-19?unitGroup=metric&include=days%2Ccurrent&key=4NCLQ7CWLBLG539SD2U4YZUB9&contentType=json",
       uri: "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/leszno?unitGroup=metric&include=current&key=4NCLQ7CWLBLG539SD2U4YZUB9&contentType=json",
       result: null,
-      current: new CurrentConditions(),
+      current,
     };
   },
   methods: {
@@ -56,12 +64,6 @@ export default {
         });
     },
   },
-  setup() {
-    //var current: CurrentConditions;
-    return {
-      //current,
-    };
-  },
 };
 </script>
 
@@ -74,8 +76,8 @@ export default {
       {{ result?.[`longitude`] }}
     </p>
     <p>
-      Aktualna temperatura to {{ current?.temp }}, and wind speed is
-      {{ current?.windspeed }}
+      Aktualna temperatura to {{ current.temp }}, and wind speed is
+      {{ current.windspeed }}
     </p>
     <button v-on:click="onClick">Get weather data</button>
   </div>
