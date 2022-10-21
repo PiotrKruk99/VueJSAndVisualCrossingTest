@@ -1,47 +1,14 @@
 <script lang="ts">
 import axios from "axios";
 
-interface TestInter {
-  temp: number;
-  windspeed: number;
-}
-
 class CurrentConditions {
-  datetime?: string;
-  datetimeEpoch?: number;
-  temp?: number;
-  feelslike?: number;
-  dew?: number;
-  precip?: number;
-  precipprob?: any;
-  snow?: number;
-  snowdepth?: number;
-  preciptype?: any;
-  windgust?: any;
-  windspeed?: number;
-  winddir?: number;
-  pressure?: number;
-  visibility?: number;
-  cloudcover?: number;
-  solarradiation?: number;
-  solarenergy?: any;
-  uvindex?: number;
-  conditions?: string;
-  icon?: string;
-  stations?: string[];
-  sunrise?: string;
-  sunriseEpoch?: number;
-  sunset?: string;
-  sunsetEpoch?: number;
-  moonphase?: number;
+  temp: number = 0;
+  windspeed: number = 0;
 }
 
 export default {
   data() {
-    var current: TestInter = {
-      temp: 0,
-      windspeed: 0,
-    };
+    var current = new CurrentConditions();
     return {
       uri: "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/leszno?unitGroup=metric&include=current&key=4NCLQ7CWLBLG539SD2U4YZUB9&contentType=json",
       result: null,
