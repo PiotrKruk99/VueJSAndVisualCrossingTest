@@ -1,19 +1,39 @@
 <script lang="ts">
 import axios from "axios";
+import { weatherStore } from "@/stores/weather";
+
+class WeatherObject {
+  resolvedAddress?: string;
+  latitude?: number;
+  longitude?: number;
+}
 
 class CurrentConditions {
-  temp: number = 0;
-  windspeed: number = 0;
+  temp?: number;
+  windspeed?: number;
 }
 
 export default {
   data() {
-    var current = new CurrentConditions();
     return {
-      uri: "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/leszno?unitGroup=metric&include=current&key=4NCLQ7CWLBLG539SD2U4YZUB9&contentType=json",
-      result: null,
-      current,
+      weatherData: weatherStore(),
+      result: new WeatherObject(),
+      current: new CurrentConditions(),
+      // apiKey: undefined,
+      // city: undefined,
+      errorMessage: "",
     };
+  },
+  computed: {
+    uri(): string {
+      var uriString =
+        "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" +
+        this.weatherData.city +
+        "?unitGroup=metric&include=current&key=" +
+        this.weatherData.apiKey +
+        "&contentType=json";
+      return uriString;
+    },
   },
   methods: {
     async onClick() {
@@ -23,10 +43,12 @@ export default {
           console.log(response);
           this.result = response.data;
           this.current = response.data.currentConditions;
+          this.errorMessage = "";
         })
         .catch((err) => {
           console.log(err);
-          this.result = null;
+          this.errorMessage = err;
+          this.result = new WeatherObject();
         });
     },
   },
@@ -36,16 +58,34 @@ export default {
 <template>
   <div class="weatherData">
     <p>
-      Miasto:
-      {{ result?.[`resolvedAddress`] }}, szerokość geograficzna:
-      {{ result?.[`latitude`] }}, długość geograficzna:
-      {{ result?.[`longitude`] }}
+      <label of="key">Key: </label>
+      <input
+        type="text"
+        id="key"
+        v-model="weatherData.apiKey"
+        placeholder="paste api key here"
+      /><br />
+      <label of="city">City: </label>
+      <input
+        type="text"
+        id="city"
+        v-model="weatherData.city"
+        placeholder="place city here"
+      />
     </p>
     <p>
-      Aktualna temperatura to {{ current.temp }}, and wind speed is
+      Resolved address:
+      {{ result.resolvedAddress }}, latitude: {{ result.latitude }}, longitude:
+      {{ result.longitude }}
+    </p>
+    <p>
+      Current temperature is {{ current.temp }}, and wind speed is
       {{ current.windspeed }}
     </p>
     <button v-on:click="onClick">Get weather data</button>
+    <p>
+      {{ errorMessage }}
+    </p>
   </div>
 </template>
 
