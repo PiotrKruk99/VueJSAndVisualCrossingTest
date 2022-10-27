@@ -60,7 +60,7 @@ export default {
     <p>
       <label of="key">Key: </label>
       <input
-        type="text"
+        type="password"
         id="key"
         v-model="weatherData.apiKey"
         placeholder="paste api key here"
@@ -83,6 +83,7 @@ export default {
       {{ current.windspeed }}
     </p>
     <button v-on:click="onClick">Get weather data</button>
+    <p>Entered city in uppercase is {{ weatherData.upCity }}</p>
     <p>
       {{ errorMessage }}
     </p>

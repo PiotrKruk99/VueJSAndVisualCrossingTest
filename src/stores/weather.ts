@@ -7,4 +7,7 @@ export const weatherStore = defineStore("weatherData", {
       city: "",
     };
   },
+  getters: {
+    upCity: (state) => state.city.toUpperCase(),
+  },
 });
