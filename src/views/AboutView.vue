@@ -23,7 +23,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="scss">
 @media (min-width: 1024px) {
   .about {
     min-height: 100vh;
@@ -31,9 +31,9 @@ export default {
     flex-direction: column;
     justify-content: center;
   }
+}
 
-  .about h2 {
-    margin-top: 1rem;
-  }
+.about h2 {
+  margin-top: 1rem;
 }
 </style>

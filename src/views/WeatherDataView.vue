@@ -19,8 +19,6 @@ export default {
       weatherData: weatherStore(),
       result: new WeatherObject(),
       current: new CurrentConditions(),
-      // apiKey: undefined,
-      // city: undefined,
       errorMessage: "",
     };
   },
@@ -90,7 +88,10 @@ export default {
   </div>
 </template>
 
-<style>
+<style scoped lang="scss">
+$inputBackground: rgb(162, 211, 146);
+$buttonBackground: rgb(79, 195, 212);
+
 @media (min-width: 1024px) {
   .weatherData {
     min-height: 100vh;
@@ -98,5 +99,18 @@ export default {
     text-align: center;
     padding-top: 2rem;
   }
+}
+
+p {
+  font-size: medium;
+  margin-top: 0.5rem;
+
+  input {
+    background-color: $inputBackground;
+  }
+}
+
+button {
+  background: $buttonBackground;
 }
 </style>
